@@ -1,14 +1,16 @@
-import numpy as np
+import numpy as np 
 import open3d as o3d
+import matplotlib as mpl
+from spectral import *
 
 # Load the point cloud
 point_cloud = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
 
 # Load the camera intrinsics
 intrinsics = o3d.camera.PinholeCameraIntrinsic()
-intrinsics.intrinsic_matrix = np.array([[fx, 0, cx],
-                                        [0, fy, cy],
-                                        [0, 0, 1]])
+intrinsics.intrinsic_matrix = np.array([[fx, 0, cx],   #(cx, cy) = Camera center in pixels
+                                        [0, fy, cy],   # (fx, fy) = Focal length in pixels
+                                        [0, 0, 1]])   
 
 # Load the image
 image = o3d.io.read_image(r"G:\Markus_Folder\Kolbu Door\Data\HS-DATASET_2023-04-19_006\results\REFLECTANCE_HS-DATASET_2023-04-19_006.png")

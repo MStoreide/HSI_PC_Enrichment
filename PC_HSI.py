@@ -1,5 +1,4 @@
 import numpy as np 
-import pymeshlab as pym
 import open3d as o3d
 import matplotlib as mpl
 from spectral import *
