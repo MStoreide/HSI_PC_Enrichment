@@ -38,3 +38,8 @@ print('voxelization')
 voxel_grid = o3d.geometry.VoxelGrid.create_from_point_cloud(pcd,
                                                             voxel_size=0.05)
 o3d.visualization.draw_geometries([voxel_grid])
+
+
+
+
+# 
