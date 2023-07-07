@@ -19,14 +19,14 @@ print(hdr)
 
 # Load PLY
 
-pc = o3d.io.read_point_cloud("G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
+pc = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
 
 o3d.visualization.draw_geometries([pc])               
 
 
 
 N = 2000
-pcd = obj.sample_points_poisson_disk(N)
+pcd = pc.sample_points_poisson_disk(N)
 # fit to unit cube
 pcd.scale(1 / np.max(pcd.get_max_bound() - pcd.get_min_bound()),
           center=pcd.get_center())
