@@ -3,6 +3,10 @@ import open3d as o3d
 import matplotlib as mpl
 from spectral import *
 
+
+##############################################################################################################################################
+
+
 # Load the point cloud
 point_cloud = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
 
