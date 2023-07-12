@@ -11,14 +11,11 @@ print(hdr)
 
 
 
-#print(hdr)
-
-# Get the size of a pixel for voxelization
 
 
 # Load PLY
 
-pc = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
+pc = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\DoorFit.ply")
 
 o3d.visualization.draw_geometries([pc])               
 
@@ -40,5 +37,13 @@ o3d.visualization.draw_geometries([voxel_grid])
 
 
 
+# Get the pixel size of the image in registered 3D space units.
 
-# 
+
+#  Simplify the PC with the pixel size
+voxel_size = #max(NUMVC.get_max_bound() - NUMVC.get_min_bound()) / 800     # This should be set to the pixel size of the image. 
+print(f'Voxel_size = {voxel_size:e}')                                
+hspc = pc.simplify_vertex_clustering(                        
+    voxel_size=voxel_size,                        
+    contraction=o3d.geometry.SimplificationContraction.Average)
+print(f'Vertex clustering Complete! \n PC has {len(hspc.vertices)} vertices')
