@@ -1,11 +1,32 @@
 import numpy as np 
 import open3d as o3d
 import matplotlib as mpl
+import pymeshlab as pym
 from spectral import *
+
+
+
+
+### PyMeshlab
+
+ms = pym.MeshSet
+PYM_PC = ms.load_new_mesh(r"G:\Markus_Folder\Kolbu Door\Data\DoorFit.ply")
+PYM_Rast = ms.load_new_raster(r"G:\Markus_Folder\Kolbu Door\Data\HS-DATASET_2023-04-19_006\results\REFLECTANCE_HS-DATASET_2023-04-19_006.png")
+
+pcreg = pym.raster_global_refinement_mutual_information(renderingmode = 'Combined',
+                                                    max_number_for_refinement_convergence = 5,
+                                                    threshold_for_refinement_convergence = 1.2,
+                                                    estimate_focal = False,                         #Better results acquired with False instead of True       
+                                                    fine = True)
+
+print(pcreg)
+
+# Get camera intrinsics
 
 
 ##############################################################################################################################################
 
+### Open3Dg
 
 # Load the point cloud
 point_cloud = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.ply")
@@ -14,7 +35,7 @@ point_cloud = o3d.io.read_point_cloud(r"G:\Markus_Folder\Kolbu Door\Data\Door2.p
 intrinsics = o3d.camera.PinholeCameraIntrinsic()
 intrinsics.intrinsic_matrix = np.array([[fx, 0, cx],   #(cx, cy) = Camera center in pixels
                                         [0, fy, cy],   # (fx, fy) = Focal length in pixels
-                                        [0, 0, 1]])   
+                                        [0, 0, 1]])    # This is copied from the pym code in line 22
 
 # Load the image
 image = o3d.io.read_image(r"G:\Markus_Folder\Kolbu Door\Data\HS-DATASET_2023-04-19_006\results\REFLECTANCE_HS-DATASET_2023-04-19_006.png")
@@ -49,8 +70,7 @@ camera_trajectory.parameters[0].intrinsic = intrinsics
 points = o3d.geometry.PointCloud.create_from_rgbd_image(
     rgbd_image,
     intrinsics,
-    camera_trajectory
-)
+    camera_trajectory)
 
 # Visualize the sampled points
 o3d.visualization.draw_geometries([point_cloud, points])
