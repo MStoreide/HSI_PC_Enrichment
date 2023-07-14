@@ -84,7 +84,7 @@ o3d.visualization.draw_geometries([point_cloud],
                                   up=[-0.0694, -0.9768, 0.2024],
                                   point_show_normal=True)
 
- # Load the camera intrinsics
+# Load the camera intrinsics
 intrinsics = o3d.camera.PinholeCameraIntrinsic()
 intrinsics.intrinsic_matrix = np.array([[focal_length_x, 0, principal_point_x],   #(cx, cy) = Camera center in pixels
                                          [0, focal_length_y, principal_point_y],   # (fx, fy) = Focal length in pixels

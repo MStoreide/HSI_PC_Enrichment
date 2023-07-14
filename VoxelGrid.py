@@ -1,11 +1,11 @@
 import open3d as o3d
 import numpy as np
 
-print("Testing IO for images ...")
+""" print("Testing IO for images ...")
 img = o3d.io.read_image("Reflectance.png")
-print(img)
+print(img) """
 
-# Load the image
+""" # Load the image
 image_path = "Reflectance.png"
 
 image = o3d.io.read_image(image_path)
@@ -24,7 +24,14 @@ voxel_grid = o3d.geometry.VoxelGrid.create_dense(origin = 0,
                                                 voxel_size = 1,
                                                  width = 512,
                                                  height = 512 ,
-                                                 depth = 5)
+                                                 depth = 5) """
+
+pc = o3d.io.read_point_cloud( "ColoredKolbuReg.ply")
+print(pc)
+resolution = 1.568
+voxel_grid = o3d.geometry.VoxelGrid.create_from_point_cloud(pc, voxel_size=resolution)
 
 # Visualize the voxel grid
-o3d.visualization.draw_geometries([voxel_grid])
+o3d.visualization.draw_geometries([voxel_grid], point_show_normal = True)
+voxel_grid_normals = voxel_grid.compute_normals()
+print(voxel_grid_normals)
