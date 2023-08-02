@@ -58,7 +58,7 @@ def align_point_cloud_and_image(pc_filepath, img_filepath):
     return aligned_pcd
 
 
-def create_voxel_grid(pcd, resolution):
+def create_voxel_grid(pcd, img_resolution):
     voxel_grid = o3d.geometry.VoxelGrid.create_from_point_cloud(aligned_pcd, voxel_size=img_resolution)
     return voxel_grid
 
