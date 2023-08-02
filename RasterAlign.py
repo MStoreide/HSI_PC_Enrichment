@@ -4,8 +4,11 @@ import numpy as np
 # Load the raster image and point cloud
 ms = pym.MeshSet()
 
-ms.load_new_mesh("ColoredKolbu.ply")
-ms.load_new_raster("Reflectance.png")
+point_cloud_file = "/media/markus/Business/Datasets/Kolbu/Data/DoorFit.ply"
+image_file = "/media/markus/Business/Datasets/Kolbu/Data/HS-DATASET_2023-04-19_006/results/REFLECTANCE_HS-DATASET_2023-04-19_006.png"
+
+ms.load_new_mesh(point_cloud_file)
+ms.load_new_raster(image_file)
 
 # Apply the raster_global_refinement_mutual_information filter
 ms.apply_filter("raster_global_refinement_mutual_information")
