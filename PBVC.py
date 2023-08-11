@@ -2,6 +2,8 @@ import numpy as np
 import open3d as o3d
 import pymeshlab as pym
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 def load_point_cloud_data(pc_filepath):
     """
@@ -20,11 +22,23 @@ def load_point_cloud_data(pc_filepath):
     return pcd, pdpcd, pdpcdn, pc
 
 def extract_img_resolution(img_filepath):
+    """
+    Extracts the resolution of the image to be projected, which is used to define the size of the voxels in the voxel grid. 
+    """
+    print("Convert an image to numpy...")
+    img = o3d.io.read_image(r"/home/markus/MDPI Paper/Samples/Cultural Heritage/KolbuDoor.JPG")
+    mplimg = mpimg.imread(r"/home/markus/MDPI Paper/Samples/Cultural Heritage/KolbuDoor.JPG")
+    img_resolution = imgdim.shape
+    print("Image Resolution is: ", img_resolution)
 
     return img_resolution
 
 
 def align_point_cloud_and_image(pc_filepath, img_filepath):
+    """
+    Aligns the selected image and the point cloud in 3D space.
+    Uses PyMeshLab
+    """
     print("Loading Point Cloud and Image...")
     ms = pym.MeshSet()
     pympc = ms.load_new_mesh(pc_filepath)
@@ -63,56 +77,59 @@ def create_voxel_grid(pcd, img_resolution):
     return voxel_grid
 
 
-# def calculate_dot_product(pcd, voxel_grid, img):
-#     """
-#     Compute the vertex normals 
-#     """
-#     pcd_normals = pcd.compute_vertex_normals()
-#     voxel_grid_normals = voxel_grid.compute_normals()  # This most be converted to the normals of the vectors within each voxel. 
-#     # pixel_normals = compute_pixel_normals(img)
-#     for normal in voxel_grid:
-#         np.mean(normal)
-#     avg_dot_products =  asd
-#     dot_products = np.dot(pcd_normals, voxel_grid_normals.T)
-#     return dot_products, avg_dot_products
+def calculate_dot_product(pcd, voxel_grid, img):
+    """
+    Compute the vertex normals 
+    """
+    pcd_normals = pcd.compute_vertex_normals()
+    voxel_grid_normals = voxel_grid.compute_normals()  # This most be converted to the normals of the vectors within each voxel. 
+    # pixel_normals = compute_pixel_normals(img)
+    for normal in voxel_grid:
+        np.mean(normal)
+    avg_dot_products =  asd
+    dot_products = np.dot(pcd_normals, voxel_grid_normals.T)
+    return dot_products, avg_dot_products
 
-# def vector_filtering(dot_products, avg_dot_products):
-#     """
-#     Here we filter out the points with vectors that receive a dot product with values higher than (-0.9).
-#     """
-#     if normal > (-0.9):
-#         continue
-#     else np.delete:
+def vector_filtering(dot_products, avg_dot_products):
+    """
+    Here we filter out the points with vectors that receive a dot product with values higher than (-0.9).
+    """
+    if normal > (-0.9):
+        continue
+    else np.delete:
 
-#     return accepted_vectors, rejected_vectors
-
-
-# def visualize_dot_product_differences(dot_products):
-#     dot_product_diff = np.abs(dot_products - 1)  # Calculate the absolute difference from 1 (perfect alignment)
-#     dot_product_diff_img = o3d.geometry.Image(dot_product_diff)
-#     o3d.visualization.draw_geometries([dot_product_diff_img])
+    return accepted_vectors, rejected_vectors
 
 
-# def PBVC(point_cloud, accepted_points, voxel_size):
+def visualize_dot_product_differences(dot_products):
+    dot_product_diff = np.abs(dot_products - 1)  # Calculate the absolute difference from 1 (perfect alignment)
+    dot_product_diff_img = o3d.geometry.Image(dot_product_diff)
+    o3d.visualization.draw_geometries([dot_product_diff_img])
 
-#     simp_pc = point_cloud.simplify_vertex_clustering(
-#         voxel_size = voxel_size,
-#         contraction = o3d.geometry.SimplificationContraction.Average)
-#     return simp_pc
+
+def PBVC(point_cloud, accepted_points, voxel_size):
+
+    simp_pc = point_cloud.simplify_vertex_clustering(
+        voxel_size = voxel_size,
+        contraction = o3d.geometry.SimplificationContraction.Average)
+    return simp_pc
 
 
 # Example usage
-point_cloud_file = "/media/markus/Business/Datasets/Kolbu/Data/DoorFit.ply"
-image_file = "/media/markus/Business/Datasets/Kolbu/Data/HS-DATASET_2023-04-19_006/results/REFLECTANCE_HS-DATASET_2023-04-19_006.png"
+# point_cloud_file = "/media/markus/Business/Datasets/Kolbu/Data/DoorFit.ply"
+# image_file = "/media/markus/Business/Datasets/Kolbu/Data/HS-DATASET_2023-04-19_006/results/REFLECTANCE_HS-DATASET_2023-04-19_006.png"
 
-# Load point cloud and image
-pcd = load_point_cloud_data(point_cloud_file)
-align_point_cloud_and_image(point_cloud_file, image_file)
-o3d.visualization.draw_geometries([aligned_pcd],
-                                   zoom=0.3412,
-                                   front=[0.4257, -0.2125, -0.8795],
-                                   lookat=[2.6172, 2.0475, 1.532],
-                                   up=[-0.0694, -0.9768, 0.2024])
+# # Load point cloud and image
+# pcd = load_point_cloud_data(point_cloud_file)
+# align_point_cloud_and_image(point_cloud_file, image_file)
+# o3d.visualization.draw_geometries([aligned_pcd],
+#                                    zoom=0.3412,
+#                                    front=[0.4257, -0.2125, -0.8795],
+#                                    lookat=[2.6172, 2.0475, 1.532],
+#                                    up=[-0.0694, -0.9768, 0.2024])
+
+
+extract_img_resolution(r"/home/markus/MDPI Paper/Samples/Cultural Heritage/KolbuDoor.JPG")
 
 
 
