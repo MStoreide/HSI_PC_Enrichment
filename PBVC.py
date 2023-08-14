@@ -72,14 +72,20 @@ def align_point_cloud_and_image(pc_filepath, img_filepath):
     return aligned_pcd
 
 
+### Stops here at the moment
+
 def create_voxel_grid(pcd, img_resolution):
+    """
+    Creates a voxel grid along the planar point cloud, with the same resolution as the input image. 
+    """
     voxel_grid = o3d.geometry.VoxelGrid.create_from_point_cloud(aligned_pcd, voxel_size=img_resolution)
     return voxel_grid
 
 
 def calculate_dot_product(pcd, voxel_grid, img):
     """
-    Compute the vertex normals 
+    Computes the vertex normals of the point cloud, and groups them within each voxel index.
+    Calculates the dot product of each vertex within the voxel to the corresponding image pixel normal. 
     """
     pcd_normals = pcd.compute_vertex_normals()
     voxel_grid_normals = voxel_grid.compute_normals()  # This most be converted to the normals of the vectors within each voxel. 
@@ -96,19 +102,24 @@ def vector_filtering(dot_products, avg_dot_products):
     """
     if normal > (-0.9):
         continue
-    else np.delete:
+   # else np.delete():
 
     return accepted_vectors, rejected_vectors
 
 
 def visualize_dot_product_differences(dot_products):
+    """
+    Returns an image visualizing which vertices were rejected in the previous steps. 
+    """
     dot_product_diff = np.abs(dot_products - 1)  # Calculate the absolute difference from 1 (perfect alignment)
     dot_product_diff_img = o3d.geometry.Image(dot_product_diff)
     o3d.visualization.draw_geometries([dot_product_diff_img])
 
 
 def PBVC(point_cloud, accepted_points, voxel_size):
-
+    """
+    Simplifies the 3D poin cloud based on the enriched spectral data and the rejected vertices. 
+    """
     simp_pc = point_cloud.simplify_vertex_clustering(
         voxel_size = voxel_size,
         contraction = o3d.geometry.SimplificationContraction.Average)
@@ -129,7 +140,6 @@ def PBVC(point_cloud, accepted_points, voxel_size):
 #                                    up=[-0.0694, -0.9768, 0.2024])
 
 
-extract_img_resolution(r"/home/markus/MDPI Paper/Samples/Cultural Heritage/KolbuDoor.JPG")
 
 
 
