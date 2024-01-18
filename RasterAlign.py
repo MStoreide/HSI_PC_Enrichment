@@ -30,6 +30,7 @@ print("Camera Intrinsics:")
 print("Focal Length (fx, fy):", focal_length_x, focal_length_y)
 print("Principal Point (cx, cy):", principal_point_x, principal_point_y)
 print("Skew (s):", skew)
+print(transformation_matrix)
 
 # Save the aligned point cloud
 ms.save_current_mesh("alignedcloud.ply")

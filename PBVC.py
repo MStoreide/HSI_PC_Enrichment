@@ -4,6 +4,7 @@ import pymeshlab as pym
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import spectral as sp
 
 def load_point_cloud_data(pc_filepath):
     """
